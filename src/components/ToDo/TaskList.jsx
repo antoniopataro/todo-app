@@ -26,13 +26,17 @@ const TaskListContainer = styled.ul`
 
     border-radius: 20px;
 
-    background-color: #ffffff;
+    color: ${(props) => props.theme.textColor};
+
+    background-color: ${(props) => props.theme.secondaryColor};
   }
 
   .task-card-left,
   .task-card-right {
     display: flex;
     flex-direction: row;
+
+    align-items: center;
 
     gap: 20px;
   }
@@ -50,8 +54,10 @@ const TaskListContainer = styled.ul`
 
     cursor: pointer;
 
+    background-color: ${(props) => props.theme.primaryColor};
+
     :hover {
-      background-color: #d9dee5;
+      background-color: ${(props) => props.theme.hoveredInputColor};
     }
   }
 
@@ -63,11 +69,14 @@ const TaskListContainer = styled.ul`
 
     cursor: pointer;
 
+    -webkit-filter: ${(props) => props.theme.svgInvertColorAmount};
+    filter: ${(props) => props.theme.svgInvertColorAmount};
+
     background-color: transparent;
   }
 
   .remove-task-button:hover {
-    background-color: #d9dee5;
+    background-color: ${(props) => props.theme.hoveredInputColor};
   }
 
   .active {
@@ -77,6 +86,8 @@ const TaskListContainer = styled.ul`
 
 function TaskList() {
   const dispatch = useDispatch();
+
+  const themeState = useSelector((state) => state.theme.currentTheme);
 
   const taskList = useSelector((state) => state.tasks.taskList);
   const currentPath = useSelector((state) => state.path.currentPath);
@@ -118,7 +129,7 @@ function TaskList() {
   };
 
   return (
-    <TaskListContainer>
+    <TaskListContainer theme={themeState}>
       {filteredTaskList.map((task, index) => (
         <motion.li
           className="task-card"

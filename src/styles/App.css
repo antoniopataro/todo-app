@@ -12,12 +12,3 @@
 body{
   font-family: 'Poppins', sans-serif;
 }
-
-#app{
-  display: flex;
-  flex-direction: row;
-
-  align-items: center;
-
-  background-color: #EAEDEE;
-}

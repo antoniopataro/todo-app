@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 import { appendTask } from "../../redux/tasksSlice";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import { useState } from "react";
 
@@ -20,15 +20,15 @@ const TaskWritterContainer = styled.div`
 
   border-radius: 20px;
 
-  background-color: #dfdfdf;
+  background-color: ${(props) => props.theme.inactiveInputColor};
 
   :hover {
-    background-color: #d9dee5;
+    background-color: ${(props) => props.theme.hoveredInputColor};
   }
 
   :focus-within {
-    background-color: #ffff;
-    box-shadow: 0px 8px 8px #dddfe1;
+    background-color: ${(props) => props.theme.secondaryColor};
+    box-shadow: 0px 8px 8px ${(props) => props.theme.boxShadowColor};
   }
 
   #text-writter-input {
@@ -40,6 +40,8 @@ const TaskWritterContainer = styled.div`
 
     font-family: "Poppins", sans-serif;
     font-size: 16px;
+
+    color: ${(props) => props.theme.textColor};
 
     background-color: transparent;
   }
@@ -69,6 +71,8 @@ import greenIcon from "../../assets/greenIcon.svg";
 
 function TaskWritter() {
   const dispatch = useDispatch();
+
+  const themeState = useSelector((state) => state.theme.currentTheme);
 
   const [taskPath, setTaskPath] = useState("/");
 
@@ -110,7 +114,7 @@ function TaskWritter() {
   };
 
   return (
-    <TaskWritterContainer>
+    <TaskWritterContainer theme={themeState}>
       <input
         type="text"
         name="task-input"

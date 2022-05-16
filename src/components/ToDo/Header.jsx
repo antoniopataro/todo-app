@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
 
-import MenuList from "../MenuList";
+import MenuList from "../Sidebar/Menu/MenuList";
 
 const HeaderContainer = styled.div`
   display: flex;

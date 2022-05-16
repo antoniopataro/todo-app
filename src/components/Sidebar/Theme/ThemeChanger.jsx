@@ -1,11 +1,12 @@
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 
-import lightThemeIcon from "../../assets/theme-icons/lightThemeIcon.svg";
-import darkThemeIcon from "../../assets/theme-icons/darkThemeIcon.svg";
-import blackThemeIcon from "../../assets/theme-icons/blackThemeIcon.svg";
+import lightThemeIcon from "../../../assets/theme-icons/lightThemeIcon.svg";
+import darkThemeIcon from "../../../assets/theme-icons/darkThemeIcon.svg";
+import blackThemeIcon from "../../../assets/theme-icons/blackThemeIcon.svg";
 
-import { useDispatch } from "react-redux";
-import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { changeTheme } from "../../../redux/themeSlice";
 
 import { motion } from "framer-motion";
 
@@ -18,6 +19,10 @@ const ThemeChagerContainer = styled.div`
   width: 100%;
 
   gap: 20px;
+
+  #theme-label {
+    color: ${(props) => props.theme.textColor};
+  }
 
   #themes-box {
     display: flex;
@@ -34,7 +39,7 @@ const ThemeChagerContainer = styled.div`
 
     border-radius: 10px;
 
-    background-color: #eaedee;
+    background-color: ${(props) => props.theme.primaryColor};
   }
 
   .theme-item {
@@ -55,11 +60,15 @@ const ThemeChagerContainer = styled.div`
 
     cursor: pointer;
 
+    color: ${(props) => props.theme.textColor};
     background-color: transparent;
 
     img,
     .theme-name {
       pointer-events: none;
+
+      -webkit-filter: ${(props) => props.theme.svgInvertColorAmount};
+      filter: ${(props) => props.theme.svgInvertColorAmount};
     }
 
     :hover {
@@ -83,15 +92,20 @@ const ThemeChagerContainer = styled.div`
 function ThemeChager() {
   const dispatch = useDispatch();
 
+  const themeState = useSelector((state) => state.theme.currentTheme);
+
   const [indicatorX, setIndicatorX] = useState(0);
   const [indicatorWidth, setIndicatorWidth] = useState();
 
   const handleChangeTheme = (theme, target) => {
-    const start = document.getElementById("active-theme-indicator-start");
+    updateIndicatorStyle(target);
+    dispatch(changeTheme(theme));
+  };
 
+  const updateIndicatorStyle = (target) => {
+    const start = document.getElementById("active-theme-indicator-start");
     setIndicatorX(target.offsetLeft - start.offsetLeft);
     setIndicatorWidth(target.offsetWidth);
-    dispatch(changeTheme(theme));
   };
 
   useEffect(() => {
@@ -100,8 +114,8 @@ function ThemeChager() {
   }, []);
 
   return (
-    <ThemeChagerContainer>
-      <div>Theme</div>
+    <ThemeChagerContainer theme={themeState}>
+      <div id="theme-label">Theme</div>
       <div id="themes-box">
         <div
           id="active-theme-indicator-start"
@@ -127,6 +141,7 @@ function ThemeChager() {
         </div>
         <motion.div
           animate={{ x: indicatorX, width: indicatorWidth }}
+          transition={{ ease: "easeOut" }}
           id="active-theme-indicator"
         ></motion.div>
       </div>

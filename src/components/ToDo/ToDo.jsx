@@ -1,8 +1,10 @@
 import styled from "styled-components";
 
-import Header from "./ToDo/Header";
-import TaskWritter from "./ToDo/TaskWritter.jsx";
-import TaskList from "./ToDo/TaskList.jsx";
+import Header from "./Header";
+import TaskWritter from "./TaskWritter.jsx";
+import TaskList from "./TaskList.jsx";
+
+import { useSelector } from "react-redux";
 
 const ToDoContainer = styled.div`
   display: flex;
@@ -15,11 +17,14 @@ const ToDoContainer = styled.div`
 
   padding: 80px 60px;
   margin: 2vh 0;
+
+  color: ${(props) => props.theme.textColor};
 `;
 
 function ToDo() {
+  const themeState = useSelector((state) => state.theme.currentTheme);
   return (
-    <ToDoContainer>
+    <ToDoContainer theme={themeState}>
       <Header />
       <TaskWritter />
       <TaskList />

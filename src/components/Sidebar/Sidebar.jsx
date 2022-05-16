@@ -1,7 +1,9 @@
 import styled from "styled-components";
 
-import Menu from "./Sidebar/Menu";
-import ThemeChanger from "./Sidebar/ThemeChanger";
+import Menu from "./Menu/Menu";
+import ThemeChanger from "./Theme/ThemeChanger";
+
+import { useSelector } from "react-redux";
 
 const SidebarContainer = styled.div`
   display: flex;
@@ -17,12 +19,13 @@ const SidebarContainer = styled.div`
 
   border-radius: 20px;
 
-  background-color: #fff;
+  background-color: ${(props) => props.theme.secondaryColor};
 `;
 
 function Sidebar() {
+  const themeState = useSelector((state) => state.theme.currentTheme);
   return (
-    <SidebarContainer>
+    <SidebarContainer theme={themeState}>
       <Menu />
       <ThemeChanger />
     </SidebarContainer>

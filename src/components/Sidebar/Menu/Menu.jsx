@@ -2,12 +2,12 @@ import { useEffect, useState } from "react";
 
 import styled from "styled-components";
 
-import { useDispatch } from "react-redux";
-import { changePath } from "../../redux/pathSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { changePath } from "../../../redux/pathSlice";
 
 import { motion } from "framer-motion";
 
-import MenuList from "../MenuList";
+import MenuList from "./MenuList";
 
 const MenuListContainer = styled.ul`
   display: flex;
@@ -38,10 +38,11 @@ const MenuListContainer = styled.ul`
 
     border-radius: 20px;
 
+    color: ${(props) => props.theme.textColor};
     background-color: transparent;
 
     :hover {
-      background-color: #eaedee;
+      background-color: ${(props) => props.theme.primaryColor};
     }
   }
 
@@ -54,12 +55,14 @@ const MenuListContainer = styled.ul`
 
     border-radius: 20px;
 
-    background-color: #eaedee;
+    background-color: ${(props) => props.theme.primaryColor};
   }
 `;
 
 function Menu() {
   const dispatch = useDispatch();
+
+  const themeState = useSelector((state) => state.theme.currentTheme);
 
   const [indicatorY, setIndicatorY] = useState(0);
   const [indicatorWidth, setIndicatorWidth] = useState(0);
@@ -79,7 +82,7 @@ function Menu() {
   }, []);
 
   return (
-    <MenuListContainer>
+    <MenuListContainer theme={themeState}>
       {MenuList.map((item, index) => (
         <li
           id={index === 0 ? "active-path-indicator-start" : ""}
@@ -87,12 +90,18 @@ function Menu() {
           className="menu-item"
           onClick={(e) => handleChangePath(item.url, e.target)}
         >
-          <img src={item.icon} alt="Menu Icon" width={15} />
+          <img
+            src={item.icon}
+            alt="Menu Icon"
+            width={15}
+            style={{ fill: "#fff" }}
+          />
           <div>{item.content}</div>
         </li>
       ))}
       <motion.div
         animate={{ y: indicatorY, width: indicatorWidth }}
+        transition={{ ease: "easeOut" }}
         id="active-path-indicator"
       ></motion.div>
     </MenuListContainer>

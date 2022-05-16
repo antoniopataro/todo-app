@@ -1,7 +1,7 @@
-import blueIcon from "../assets/blueIcon.svg";
-import redIcon from "../assets/redIcon.svg";
-import purpleIcon from "../assets/purpleIcon.svg";
-import greenIcon from "../assets/greenIcon.svg";
+import blueIcon from "../../../assets/blueIcon.svg";
+import redIcon from "../../../assets/redIcon.svg";
+import purpleIcon from "../../../assets/purpleIcon.svg";
+import greenIcon from "../../../assets/greenIcon.svg";
 
 const MenuList = [
   {
