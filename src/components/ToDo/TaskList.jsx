@@ -1,7 +1,7 @@
+import styled from "styled-components";
+
 import { useDispatch, useSelector } from "react-redux";
 import { completeTask, removeTask } from "../../redux/tasksSlice";
-
-import styled from "styled-components";
 
 import { motion } from "framer-motion";
 
@@ -88,7 +88,6 @@ function TaskList() {
   const dispatch = useDispatch();
 
   const themeState = useSelector((state) => state.theme.currentTheme);
-
   const taskList = useSelector((state) => state.tasks.taskList);
   const currentPath = useSelector((state) => state.path.currentPath);
 
@@ -123,9 +122,8 @@ function TaskList() {
       return;
     });
 
-    localStorage.setItem("userTasks", JSON.stringify(parsedLocalStorage));
-
     dispatch(completeTask(parsedLocalStorage));
+    localStorage.setItem("userTasks", JSON.stringify(parsedLocalStorage));
   };
 
   return (

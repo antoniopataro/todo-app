@@ -68,17 +68,23 @@ function Menu() {
   const [indicatorWidth, setIndicatorWidth] = useState(0);
 
   const handleChangePath = (url, target) => {
+    dispatch(changePath(url));
+    updateIndicatorStyle(target);
+  };
+
+  const updateIndicatorStyle = (target) => {
     const start = document.getElementById("active-path-indicator-start");
 
-    setIndicatorY(target.offsetTop - start.offsetTop);
     setIndicatorWidth(start.offsetWidth);
-
-    dispatch(changePath(url));
+    if (target) {
+      setIndicatorY(target.offsetTop - start.offsetTop);
+      return;
+    }
   };
 
   useEffect(() => {
-    const start = document.getElementById("active-path-indicator-start");
-    setIndicatorWidth(start.offsetWidth);
+    updateIndicatorStyle();
+    window.addEventListener("resize", () => updateIndicatorStyle());
   }, []);
 
   return (
@@ -90,12 +96,7 @@ function Menu() {
           className="menu-item"
           onClick={(e) => handleChangePath(item.url, e.target)}
         >
-          <img
-            src={item.icon}
-            alt="Menu Icon"
-            width={15}
-            style={{ fill: "#fff" }}
-          />
+          <img src={item.icon} alt="Menu Icon" width={15} />
           <div>{item.content}</div>
         </li>
       ))}

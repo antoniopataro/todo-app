@@ -1,9 +1,16 @@
+import { useState } from "react";
+
 import styled from "styled-components";
 
-import { appendTask } from "../../redux/tasksSlice";
 import { useDispatch, useSelector } from "react-redux";
+import { appendTask } from "../../redux/tasksSlice";
 
-import { useState } from "react";
+import { v4 as uuidv4 } from "uuid";
+
+import blueIcon from "../../assets/blueIcon.svg";
+import redIcon from "../../assets/redIcon.svg";
+import purpleIcon from "../../assets/purpleIcon.svg";
+import greenIcon from "../../assets/greenIcon.svg";
 
 const TaskWritterContainer = styled.div`
   display: flex;
@@ -81,13 +88,6 @@ const TaskWritterContainer = styled.div`
   }
 `;
 
-import { v4 as uuidv4 } from "uuid";
-
-import blueIcon from "../../assets/blueIcon.svg";
-import redIcon from "../../assets/redIcon.svg";
-import purpleIcon from "../../assets/purpleIcon.svg";
-import greenIcon from "../../assets/greenIcon.svg";
-
 function TaskWritter() {
   const dispatch = useDispatch();
 
@@ -126,7 +126,6 @@ function TaskWritter() {
     }
 
     const newTask = new Task(e);
-
     dispatch(appendTask(newTask));
 
     e.target.value = "";

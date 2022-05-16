@@ -1,9 +1,9 @@
 import styled from "styled-components";
 
+import { useSelector } from "react-redux";
+
 import Menu from "./Menu/Menu";
 import ThemeChanger from "./Theme/ThemeChanger";
-
-import { useSelector } from "react-redux";
 
 const SidebarContainer = styled.div`
   display: flex;
@@ -24,6 +24,7 @@ const SidebarContainer = styled.div`
 
 function Sidebar() {
   const themeState = useSelector((state) => state.theme.currentTheme);
+
   return (
     <SidebarContainer theme={themeState}>
       <Menu />

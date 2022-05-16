@@ -1,11 +1,11 @@
-import "../styles/App.css";
+import styled from "styled-components";
+
+import { useSelector } from "react-redux";
 
 import Sidebar from "./Sidebar/Sidebar";
 import ToDo from "./ToDo/ToDo";
 
-import styled from "styled-components";
-
-import { useSelector } from "react-redux";
+import "../styles/App.css";
 
 const AppContainer = styled.div`
   display: flex;

@@ -1,10 +1,10 @@
 import styled from "styled-components";
 
+import { useSelector } from "react-redux";
+
 import Header from "./Header";
 import TaskWritter from "./TaskWritter.jsx";
 import TaskList from "./TaskList.jsx";
-
-import { useSelector } from "react-redux";
 
 const ToDoContainer = styled.div`
   display: flex;
@@ -23,6 +23,7 @@ const ToDoContainer = styled.div`
 
 function ToDo() {
   const themeState = useSelector((state) => state.theme.currentTheme);
+
   return (
     <ToDoContainer theme={themeState}>
       <Header />

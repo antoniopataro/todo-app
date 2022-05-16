@@ -1,14 +1,15 @@
 import { useEffect, useState } from "react";
-import styled from "styled-components";
 
-import lightThemeIcon from "../../../assets/theme-icons/lightThemeIcon.svg";
-import darkThemeIcon from "../../../assets/theme-icons/darkThemeIcon.svg";
-import blackThemeIcon from "../../../assets/theme-icons/blackThemeIcon.svg";
+import styled from "styled-components";
 
 import { useDispatch, useSelector } from "react-redux";
 import { changeTheme } from "../../../redux/themeSlice";
 
 import { motion } from "framer-motion";
+
+import lightThemeIcon from "../../../assets/theme-icons/lightThemeIcon.svg";
+import darkThemeIcon from "../../../assets/theme-icons/darkThemeIcon.svg";
+import blackThemeIcon from "../../../assets/theme-icons/blackThemeIcon.svg";
 
 const ThemeChagerContainer = styled.div`
   display: flex;
@@ -98,19 +99,25 @@ function ThemeChager() {
   const [indicatorWidth, setIndicatorWidth] = useState();
 
   const handleChangeTheme = (theme, target) => {
-    updateIndicatorStyle(target);
     dispatch(changeTheme(theme));
+    updateIndicatorStyle(target);
   };
 
   const updateIndicatorStyle = (target) => {
     const start = document.getElementById("active-theme-indicator-start");
-    setIndicatorX(target.offsetLeft - start.offsetLeft);
-    setIndicatorWidth(target.offsetWidth);
+
+    if (target) {
+      setIndicatorX(target.offsetLeft - start.offsetLeft);
+      setIndicatorWidth(target.offsetWidth);
+      return;
+    }
+
+    setIndicatorWidth(start.offsetWidth);
   };
 
   useEffect(() => {
-    const start = document.getElementById("active-theme-indicator-start");
-    setIndicatorWidth(start.offsetWidth);
+    updateIndicatorStyle();
+    window.addEventListener("resize", () => updateIndicatorStyle());
   }, []);
 
   return (
