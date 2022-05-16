@@ -6,7 +6,7 @@
   box-sizing: border-box;
 
   transition: all linear 0.25s;
-  transition-property: background-color, box-shadow;
+  transition-property: background-color, box-shadow, outline;
 }
 
 body{

@@ -59,6 +59,25 @@ const TaskWritterContainer = styled.div`
     border: none;
     outline: none;
     border-radius: 10px;
+
+    color: ${(props) => props.theme.textColor};
+    background-color: ${(props) => props.theme.secondaryColor};
+
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+
+    :focus {
+      outline: 1px solid #bbbbbb;
+    }
+    :hover {
+      outline: 1px solid #bbbbbb;
+    }
+
+    .task-writter-selector-option {
+      color: ${(props) => props.theme.textColor};
+      background-color: ${(props) => props.theme.secondaryColor};
+    }
   }
 `;
 
@@ -126,9 +145,22 @@ function TaskWritter() {
         id="task-writter-selector"
         onChange={(e) => setTaskPath(e.target.value)}
       >
-        <option value="/">Home</option>;<option value="/work">Work</option>;
-        <option value="/studies">Studies</option>;
-        <option value="/finances">Finances</option>;
+        <option className="task-writter-selector-option" value="/">
+          Home
+        </option>
+        ;
+        <option className="task-writter-selector-option" value="/work">
+          Work
+        </option>
+        ;
+        <option className="task-writter-selector-option" value="/studies">
+          Studies
+        </option>
+        ;
+        <option className="task-writter-selector-option" value="/finances">
+          Finances
+        </option>
+        ;
       </select>
     </TaskWritterContainer>
   );

@@ -16,7 +16,7 @@ const darkTheme = {
   inactiveInputColor: "#46484E",
   hoveredInputColor: "#3A3B3F",
   activeInputColor: "#fff",
-  boxShadowColor: "#00000082",
+  boxShadowColor: "#00000042",
   textColor: "#fff",
   svgInvertColorAmount: "invert(50%)",
 };
