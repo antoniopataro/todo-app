@@ -10,9 +10,11 @@ I always liked minimalist and clean design, and when I saw Dona for the first ti
 
 Please check them out: [Dona](https://dona.ai/).
 
-Also wanted to learn Redux and get in touch with ReactNative.
+Also wanted to learn Redux and dive more into UI construction.
 
-This project was made with React ⚛️, created with Vite ⚡️ and later on transposed to ReactNative. 📲.
+This project was made with React ⚛️ and created with Vite ⚡️.
+
+My initial intent was to transpose it to a mobile app using React Native, but, for now, it is only a web SPA.
 
 ## 📚 Installed libs:
 
@@ -28,5 +30,6 @@ This project was made with React ⚛️, created with Vite ⚡️ and later on t
 - [ ] Edit tasks
 - [x] Remove tasks
 - [x] Complete tasks
-- [ ] Light/Dark Theme
+- [x] Light/Dark Theme
 - [ ] Order tasks (?)
+- [ ] Add Cathegories
