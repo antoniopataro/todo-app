@@ -6,6 +6,8 @@ import { completeTask, removeTask } from "../../redux/tasksSlice";
 import { motion } from "framer-motion";
 
 import trashIcon from "../../assets/trashIcon.svg";
+import { useState } from "react";
+import { useEffect } from "react";
 
 const TaskListContainer = styled.ul`
   display: flex;
@@ -31,7 +33,20 @@ const TaskListContainer = styled.ul`
     background-color: ${(props) => props.theme.secondaryColor};
   }
 
-  .task-card-left,
+  .task-card-left {
+    display: flex;
+    flex-direction: row;
+
+    width: 100%;
+
+    align-items: center;
+
+    word-break: break-all;
+    overflow: hidden;
+
+    gap: 20px;
+  }
+
   .task-card-right {
     display: flex;
     flex-direction: row;
@@ -39,6 +54,12 @@ const TaskListContainer = styled.ul`
     align-items: center;
 
     gap: 20px;
+  }
+
+  .task-content {
+    width: 100%;
+
+    padding-right: 20px;
   }
 
   button {
@@ -79,8 +100,14 @@ const TaskListContainer = styled.ul`
     background-color: ${(props) => props.theme.hoveredInputColor};
   }
 
-  .active {
-    text-decoration: line-through;
+  #complete-task-indicator {
+    position: absolute;
+
+    margin: 0 35px;
+
+    height: 1px;
+
+    background-color: #000000;
   }
 `;
 
@@ -90,6 +117,8 @@ function TaskList() {
   const themeState = useSelector((state) => state.theme.currentTheme);
   const taskList = useSelector((state) => state.tasks.taskList);
   const currentPath = useSelector((state) => state.path.currentPath);
+
+  const [indicatorWidth, setIndicatorWidth] = useState();
 
   const filteredTaskList = taskList
     .slice(0)
@@ -103,10 +132,6 @@ function TaskList() {
         return;
       }
     });
-
-  const handleRemoveTask = (e) => {
-    dispatch(removeTask(e.target.id));
-  };
 
   const handleCompleteTask = (e) => {
     const parsedLocalStorage = JSON.parse(localStorage.getItem("userTasks"));
@@ -124,6 +149,29 @@ function TaskList() {
 
     dispatch(completeTask(parsedLocalStorage));
     localStorage.setItem("userTasks", JSON.stringify(parsedLocalStorage));
+    getActiveIndicatorWidth(e);
+  };
+
+  const handleRemoveTask = (e) => {
+    // console.log(e.target.parentNode.parentNode.parentNode);
+    dispatch(removeTask(e.target.id));
+  };
+
+  const getActiveIndicatorWidth = (e) => {
+    const taskContent = e.target.nextSibling;
+    const taskContentWidth = taskContent.offsetWidth;
+
+    setIndicatorWidth(taskContentWidth - 20);
+  };
+
+  useEffect(() => {
+    window.addEventListener("resize", updateIndicatorWidth);
+  }, []);
+
+  const updateIndicatorWidth = () => {
+    const indicatorWidthRef = document.getElementsByClassName("task-content");
+
+    setIndicatorWidth(indicatorWidthRef[0].offsetWidth - 20);
   };
 
   return (
@@ -134,14 +182,30 @@ function TaskList() {
           key={index}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
+          style={{
+            backgroundColor: task.isDone ? themeState.inactiveInputColor : "",
+          }}
         >
+          <motion.div
+            id="complete-task-indicator"
+            initial={{ width: 0 }}
+            animate={{ width: task.isDone ? indicatorWidth : 0 }}
+          ></motion.div>
           <div className="task-card-left">
             <button
               id={task.uuid}
               className="complete-task-button"
               onClick={(e) => handleCompleteTask(e)}
+              style={{
+                backgroundColor: task.isDone ? themeState.textColor : "",
+              }}
             ></button>
-            <div className={task.isDone ? "active" : ""}>{task.content}</div>
+            <div
+              className="task-content"
+              onLoad={(e) => setIndicatorWidthRef(e.target.offsetWidth)}
+            >
+              {task.content}
+            </div>
           </div>
           <div className="task-card-right">
             <img src={task.icon} alt="Task Type" width={15} />

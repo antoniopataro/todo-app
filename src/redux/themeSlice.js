@@ -18,7 +18,7 @@ const darkTheme = {
   activeInputColor: "#fff",
   boxShadowColor: "#00000042",
   textColor: "#fff",
-  svgInvertColorAmount: "invert(50%)",
+  svgInvertColorAmount: "invert(40%)",
 };
 const blackTheme = {
   primaryColor: "#000000",

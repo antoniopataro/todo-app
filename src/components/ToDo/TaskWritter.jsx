@@ -7,6 +7,7 @@ import { appendTask } from "../../redux/tasksSlice";
 
 import { v4 as uuidv4 } from "uuid";
 
+import homeIcon from "../../assets/homeIcon.svg";
 import blueIcon from "../../assets/blueIcon.svg";
 import redIcon from "../../assets/redIcon.svg";
 import purpleIcon from "../../assets/purpleIcon.svg";
@@ -92,6 +93,7 @@ function TaskWritter() {
   const dispatch = useDispatch();
 
   const themeState = useSelector((state) => state.theme.currentTheme);
+  const typesList = useSelector((state) => state.types.typesList);
 
   const [taskPath, setTaskPath] = useState("/");
 
@@ -108,7 +110,7 @@ function TaskWritter() {
   const handleTaskIcon = () => {
     switch (taskPath) {
       case "/":
-        return blueIcon;
+        return homeIcon;
       case "/work":
         return redIcon;
       case "/studies":
@@ -116,7 +118,7 @@ function TaskWritter() {
       case "/finances":
         return greenIcon;
       default:
-        return;
+        return blueIcon;
     }
   };
 
@@ -144,21 +146,15 @@ function TaskWritter() {
         id="task-writter-selector"
         onChange={(e) => setTaskPath(e.target.value)}
       >
-        <option className="task-writter-selector-option" value="/">
-          Home
-        </option>
-        ;
-        <option className="task-writter-selector-option" value="/work">
-          Work
-        </option>
-        ;
-        <option className="task-writter-selector-option" value="/studies">
-          Studies
-        </option>
-        ;
-        <option className="task-writter-selector-option" value="/finances">
-          Finances
-        </option>
+        {typesList.map((type, index) => (
+          <option
+            className="task-writter-selector-option"
+            key={index}
+            value={type.url}
+          >
+            {type.content}
+          </option>
+        ))}
         ;
       </select>
     </TaskWritterContainer>

@@ -17,9 +17,9 @@ const AppContainer = styled.div`
 `;
 
 function App() {
-  const themeState = useSelector((state) => state.theme.currentTheme);
+  const currentTheme = useSelector((state) => state.theme.currentTheme);
   return (
-    <AppContainer theme={themeState}>
+    <AppContainer theme={currentTheme}>
       <Sidebar />
       <ToDo />
     </AppContainer>
