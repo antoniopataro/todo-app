@@ -2,7 +2,8 @@
 
 It is a simple To-Do App!
 
-![Preview](https://s8.gifyu.com/images/2022-05-14-18-28-42.gif)
+[![Preview](https://s8.gifyu.com/images/2022-05-14-18-28-42.gif)](https://user-images.githubusercontent.com/87823281/168914973-843de335-7830-4d46-9fd8-eb96de729729.mp4
+)
 
 ## 🔥 Information
 
@@ -27,9 +28,7 @@ My initial intent was to transpose it to a mobile app using React Native, but, f
 
 - [x] Write tasks
 - [x] Add tasks
-- [ ] Edit tasks
 - [x] Remove tasks
 - [x] Complete tasks
 - [x] Light/Dark Theme
-- [ ] Order tasks (?)
-- [ ] Add Cathegories
+- [x] Edit Cathegories
