@@ -94,6 +94,10 @@ const TaskListContainer = styled.ul`
     filter: ${(props) => props.theme.svgInvertColorAmount};
 
     background-color: transparent;
+
+    img {
+      pointer-events: none;
+    }
   }
 
   .remove-task-button:hover {
@@ -153,7 +157,6 @@ function TaskList() {
   };
 
   const handleRemoveTask = (e) => {
-    // console.log(e.target.parentNode.parentNode.parentNode);
     dispatch(removeTask(e.target.id));
   };
 
@@ -210,15 +213,11 @@ function TaskList() {
           <div className="task-card-right">
             <img src={task.icon} alt="Task Type" width={15} />
             <button
+              id={task.uuid}
               className="remove-task-button"
               onClick={(e) => handleRemoveTask(e)}
             >
-              <img
-                src={trashIcon}
-                id={task.uuid}
-                alt="Remove Task"
-                width={15}
-              />
+              <img src={trashIcon} alt="Remove Task" width={15} />
             </button>
           </div>
         </motion.li>
