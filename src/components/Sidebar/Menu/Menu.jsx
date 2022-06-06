@@ -54,6 +54,8 @@ const MenuListContainer = styled.ul`
       flex-direction: row;
 
       gap: 20px;
+
+      pointer-events: none;
     }
 
     .remove-type {
@@ -74,11 +76,10 @@ const MenuListContainer = styled.ul`
       :hover {
         background-color: ${(props) => props.theme.hoveredInputColor};
       }
-    }
 
-    div,
-    img {
-      pointer-events: none;
+      img {
+        pointer-events: none;
+      }
     }
   }
 
@@ -157,26 +158,20 @@ function Menu() {
     updateIndicatorStyle(target);
   };
 
-  useEffect(() => {
-    const start = document.getElementById("active-path-indicator-start");
-    setIndicatorWidth(start.offsetWidth);
+  const startRef = useRef(null);
 
+  useEffect(() => {
+    updateIndicatorStyle();
     window.addEventListener("resize", () => updateIndicatorStyle());
   }, []);
 
   const updateIndicatorStyle = (target) => {
-    if (target == undefined) {
-      return;
-    }
+    const startRect = startRef.current.getBoundingClientRect();
+    setIndicatorWidth(startRect.width);
 
-    const start = document.getElementById("active-path-indicator-start");
-
-    if (target.className != "remove-type") {
-      setIndicatorWidth(start.offsetWidth);
-      if (target) {
-        setIndicatorY(target.offsetTop - start.offsetTop);
-        return;
-      }
+    if (target) {
+      const targetRect = target.getBoundingClientRect();
+      setIndicatorY(targetRect.top - startRect.top);
     }
   };
 
@@ -210,6 +205,7 @@ function Menu() {
     }
 
     dispatch(removeType(e.target.id));
+    setIndicatorY(0);
   };
 
   const useOutsideAlerter = (ref) => {
@@ -247,7 +243,11 @@ function Menu() {
   };
 
   return (
-    <MenuListContainer theme={themeState} isEditing={isEditingCathegory}>
+    <MenuListContainer
+      theme={themeState}
+      isEditing={isEditingCathegory}
+      ref={startRef}
+    >
       {typesList.map((item, index) => (
         <li
           id={index === 0 ? "active-path-indicator-start" : ""}

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 
 import styled from "styled-components";
 
@@ -103,16 +103,17 @@ function ThemeChager() {
     updateIndicatorStyle(target);
   };
 
+  const startRef = useRef(null);
+
   const updateIndicatorStyle = (target) => {
-    const start = document.getElementById("active-theme-indicator-start");
+    const startRect = startRef.current.getBoundingClientRect();
+
+    setIndicatorWidth(startRect.width);
 
     if (target) {
-      setIndicatorX(target.offsetLeft - start.offsetLeft);
-      setIndicatorWidth(target.offsetWidth);
-      return;
+      const targetRect = target.getBoundingClientRect();
+      setIndicatorX(targetRect.x - startRect.x);
     }
-
-    setIndicatorWidth(start.offsetWidth);
   };
 
   useEffect(() => {
@@ -125,6 +126,7 @@ function ThemeChager() {
       <div id="theme-label">Theme</div>
       <div id="themes-box">
         <div
+          ref={startRef}
           id="active-theme-indicator-start"
           className="theme-item"
           onClick={(e) => handleChangeTheme("light", e.target)}

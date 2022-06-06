@@ -1,3 +1,5 @@
+import React, { useState, useEffect, useRef } from "react";
+
 import styled from "styled-components";
 
 import { useDispatch, useSelector } from "react-redux";
@@ -6,8 +8,6 @@ import { completeTask, removeTask } from "../../redux/tasksSlice";
 import { motion } from "framer-motion";
 
 import trashIcon from "../../assets/trashIcon.svg";
-import { useState } from "react";
-import { useEffect } from "react";
 
 const TaskListContainer = styled.ul`
   display: flex;
@@ -171,10 +171,12 @@ function TaskList() {
     window.addEventListener("resize", updateIndicatorWidth);
   }, []);
 
-  const updateIndicatorWidth = () => {
-    const indicatorWidthRef = document.getElementsByClassName("task-content");
+  const taskContentRef = useRef(null);
 
-    setIndicatorWidth(indicatorWidthRef[0].offsetWidth - 20);
+  const updateIndicatorWidth = () => {
+    const indicatorWidthRef = taskContentRef;
+
+    setIndicatorWidth(indicatorWidthRef.offsetWidth - 20);
   };
 
   return (
@@ -204,6 +206,7 @@ function TaskList() {
               }}
             ></button>
             <div
+              ref={taskContentRef}
               className="task-content"
               onLoad={(e) => setIndicatorWidthRef(e.target.offsetWidth)}
             >
