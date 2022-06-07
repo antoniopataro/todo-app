@@ -17,8 +17,8 @@ const TaskWritterContainer = styled.div`
   display: flex;
   flex-direction: row;
 
+  width: 40vw;
   height: 60px;
-  width: 100%;
 
   gap: 20px;
   padding: 20px;
@@ -46,7 +46,7 @@ const TaskWritterContainer = styled.div`
     width: 100%;
     height: 40px;
 
-    font-family: "Poppins", sans-serif;
+    font-family: "Inter", sans-serif;
     font-size: 16px;
 
     color: ${(props) => props.theme.textColor};

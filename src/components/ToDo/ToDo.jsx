@@ -10,8 +10,10 @@ const ToDoContainer = styled.div`
   display: flex;
   flex-direction: column;
 
-  width: 60vw;
+  width: 64vw;
   height: calc(100vh - 4vh);
+
+  align-items: center;
 
   gap: 20px;
 

@@ -7,6 +7,7 @@ const HeaderContainer = styled.div`
   display: flex;
   flex-direction: row;
 
+  width: 40vw;
   height: 60px;
 
   align-items: center;

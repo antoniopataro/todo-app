@@ -12,6 +12,9 @@ import trashIcon from "../../assets/trashIcon.svg";
 const TaskListContainer = styled.ul`
   display: flex;
   flex-direction: column;
+
+  width: 40vw;
+
   gap: 10px;
 
   .task-card {
@@ -122,8 +125,6 @@ function TaskList() {
   const taskList = useSelector((state) => state.tasks.taskList);
   const currentPath = useSelector((state) => state.path.currentPath);
 
-  const [indicatorWidth, setIndicatorWidth] = useState();
-
   const filteredTaskList = taskList
     .slice(0)
     .reverse()
@@ -138,9 +139,9 @@ function TaskList() {
     });
 
   const handleCompleteTask = (e) => {
-    const parsedLocalStorage = JSON.parse(localStorage.getItem("userTasks"));
+    const storagedTasks = JSON.parse(localStorage.getItem("userTasks"));
 
-    parsedLocalStorage.map((task) => {
+    storagedTasks.map((task) => {
       if (task.uuid === e.target.id) {
         if (task.isDone) {
           task.isDone = false;
@@ -151,33 +152,29 @@ function TaskList() {
       return;
     });
 
-    dispatch(completeTask(parsedLocalStorage));
-    localStorage.setItem("userTasks", JSON.stringify(parsedLocalStorage));
-    getActiveIndicatorWidth(e);
+    dispatch(completeTask(storagedTasks));
+    localStorage.setItem("userTasks", JSON.stringify(storagedTasks));
+    updateIndicatorWidth();
   };
 
   const handleRemoveTask = (e) => {
     dispatch(removeTask(e.target.id));
   };
 
-  const getActiveIndicatorWidth = (e) => {
-    const taskContent = e.target.nextSibling;
-    const taskContentWidth = taskContent.offsetWidth;
-
-    setIndicatorWidth(taskContentWidth - 20);
-  };
-
-  useEffect(() => {
-    window.addEventListener("resize", updateIndicatorWidth);
-  }, []);
-
   const taskContentRef = useRef(null);
 
-  const updateIndicatorWidth = () => {
-    const indicatorWidthRef = taskContentRef;
+  const [indicatorWidth, setIndicatorWidth] = useState();
 
-    setIndicatorWidth(indicatorWidthRef.offsetWidth - 20);
-  };
+  function updateIndicatorWidth() {
+    const taskContentRect = taskContentRef.current.getBoundingClientRect();
+
+    setIndicatorWidth(taskContentRect.width - 20);
+  }
+
+  useEffect(() => {
+    updateIndicatorWidth;
+    window.addEventListener("resize", updateIndicatorWidth);
+  }, []);
 
   return (
     <TaskListContainer theme={themeState}>
@@ -205,11 +202,7 @@ function TaskList() {
                 backgroundColor: task.isDone ? themeState.textColor : "",
               }}
             ></button>
-            <div
-              ref={taskContentRef}
-              className="task-content"
-              onLoad={(e) => setIndicatorWidthRef(e.target.offsetWidth)}
-            >
+            <div ref={taskContentRef} className="task-content">
               {task.content}
             </div>
           </div>

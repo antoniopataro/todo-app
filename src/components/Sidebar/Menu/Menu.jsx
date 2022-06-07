@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, useCallback } from "react";
 
 import styled from "styled-components";
 
@@ -131,7 +131,7 @@ const MenuListContainer = styled.ul`
     width: 100%;
     height: 100%;
 
-    font-family: "Poppins", sans-serif;
+    font-family: "Inter", sans-serif;
     font-size: 16px;
 
     outline: none;
@@ -139,6 +139,11 @@ const MenuListContainer = styled.ul`
 
     color: ${(props) => props.theme.textColor};
     background-color: transparent;
+  }
+
+  #add-cathegory-input-inactive {
+    font-family: "Inter", sans-serif;
+    font-weight: 400;
   }
 `;
 
@@ -148,31 +153,11 @@ function Menu() {
   const themeState = useSelector((state) => state.theme.currentTheme);
   const typesList = useSelector((state) => state.types.typesList);
 
-  const [indicatorY, setIndicatorY] = useState(0);
-  const [indicatorWidth, setIndicatorWidth] = useState(0);
-
   const [isEditingCathegory, setIsEditingCathegory] = useState(false);
 
   const handleChangePath = (url, target) => {
     dispatch(changePath(url));
     updateIndicatorStyle(target);
-  };
-
-  const startRef = useRef(null);
-
-  useEffect(() => {
-    updateIndicatorStyle();
-    window.addEventListener("resize", () => updateIndicatorStyle());
-  }, []);
-
-  const updateIndicatorStyle = (target) => {
-    const startRect = startRef.current.getBoundingClientRect();
-    setIndicatorWidth(startRect.width);
-
-    if (target) {
-      const targetRect = target.getBoundingClientRect();
-      setIndicatorY(targetRect.top - startRect.top);
-    }
   };
 
   class Type {
@@ -236,11 +221,31 @@ function Menu() {
         onKeyDown={(e) => handleNewCathegory(e)}
       />
     ) : (
-      <div>Add Cathegory</div>
+      <div id="add-cathegory-input-inactive">Add Cathegory</div>
     );
 
     return <div>{addCathegory}</div>;
   };
+
+  const [indicatorY, setIndicatorY] = useState(0);
+  const [indicatorWidth, setIndicatorWidth] = useState(0);
+
+  useEffect(() => {
+    updateIndicatorStyle();
+    window.addEventListener("resize", () => updateIndicatorStyle());
+  }, []);
+
+  const startRef = useRef(null);
+
+  const updateIndicatorStyle = useCallback((target) => {
+    const startRect = startRef.current.getBoundingClientRect();
+    setIndicatorWidth(startRect.width);
+
+    if (target) {
+      const targetRect = target.getBoundingClientRect();
+      setIndicatorY(targetRect.top - startRect.top);
+    }
+  }, []);
 
   return (
     <MenuListContainer

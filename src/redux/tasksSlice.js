@@ -1,13 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialTaskListState = () => {
-  const parsedLocalStorage = JSON.parse(localStorage.getItem("userTasks"));
+  const storagedTasks = JSON.parse(localStorage.getItem("userTasks"));
 
-  if (parsedLocalStorage === null) {
+  if (!storagedTasks) {
     return [];
-  } else {
-    return parsedLocalStorage;
   }
+  return storagedTasks;
 };
 
 export const slice = createSlice({
