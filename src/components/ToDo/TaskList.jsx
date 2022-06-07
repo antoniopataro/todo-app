@@ -166,13 +166,17 @@ function TaskList() {
   const [indicatorWidth, setIndicatorWidth] = useState();
 
   function updateIndicatorWidth() {
+    if (!taskContentRef.current) {
+      return;
+    }
+
     const taskContentRect = taskContentRef.current.getBoundingClientRect();
 
     setIndicatorWidth(taskContentRect.width - 20);
   }
 
   useEffect(() => {
-    updateIndicatorWidth;
+    updateIndicatorWidth();
     window.addEventListener("resize", updateIndicatorWidth);
   }, []);
 
