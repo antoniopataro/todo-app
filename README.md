@@ -7,7 +7,7 @@ It is a simple To-Do App!
 
 I always liked minimalist and clean design, and when I saw Dona for the first time, I NEEDED something like this. Since I’m currently learning programming, I decided to create my own Dona (literally copying their design). Please check them out: [Dona](https://dona.ai/).
 
-Also wanted to learn `Redux` and dive more into UI construction.
+Also wanted to learn `redux` and dive more into UI construction.
 
 My initial intent was to transpose it to a mobile app using `React Native`, but, for now, it is only a web SPA.
 
